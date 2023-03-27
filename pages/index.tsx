@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next';
 import Container from '../components/container'
 import MoreStories from '../components/more-stories'
 import HeroPost from '../components/hero-post'
@@ -15,7 +16,7 @@ export default function Index({ allPosts: { edges }, preview }) {
   return (
     <Layout preview={preview}>
       <Head>
-        <title>{`Next.js Blog Example with ${CMS_NAME}`}</title>
+        <title>Next.js Blog Example with {CMS_NAME}</title>
       </Head>
       <Container>
         <Intro />
@@ -35,11 +36,11 @@ export default function Index({ allPosts: { edges }, preview }) {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+export const getServerSideProps: GetServerSideProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview)
 
   return {
     props: { allPosts, preview },
-    revalidate: 10,
+    
   }
 }
